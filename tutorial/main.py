@@ -113,8 +113,12 @@ def delete_doc_by_id(person_id):
     person_collection.delete_one({"_id": _id})
 
 address = {
-    "_id": "645e8656917a2f9abdd57264", 
-    "street": "Bay"
+    "_id": "645e8656917a2f9abdd57265", 
+    "street": "Bay Street",
+    "number": 2706,
+    "city": "San Francisco",
+    "country": "United States",
+    "zip": "94107"
 }
 
 def add_address_embed(person_id, address):
@@ -123,4 +127,14 @@ def add_address_embed(person_id, address):
 
     person_collection.update_one({"_id": _id}, {"$addToSet": {'addresses': address}})
 
-delete_doc_by_id("645e8656917a2f9abdd57264")
+def add_address_relationship(person_id, address):
+    from bson.objectid import ObjectId
+    _id = ObjectId(person_id)
+
+    address =  address.copy()
+    address["owner_id"] = person_id
+
+    address_collection = production.address
+    address_collection.insert_one(address)
+
+add_address_relationship("645e8656917a2f9abdd57266", address)
