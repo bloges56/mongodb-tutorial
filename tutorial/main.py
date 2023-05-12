@@ -112,11 +112,15 @@ def delete_doc_by_id(person_id):
     _id = ObjectId(person_id)
     person_collection.delete_one({"_id": _id})
 
+address = {
+    "_id": "645e8656917a2f9abdd57264", 
+    "street": "Bay"
+}
 
 def add_address_embed(person_id, address):
     from bson.objectid import ObjectId
-    _id - ObjectId(person_id)
+    _id = ObjectId(person_id)
 
-    person_collection.update_one({"_id": _id}, )
+    person_collection.update_one({"_id": _id}, {"$addToSet": {'addresses': address}})
 
 delete_doc_by_id("645e8656917a2f9abdd57264")
